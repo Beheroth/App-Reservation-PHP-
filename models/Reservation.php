@@ -5,6 +5,7 @@ class Reservation
 	private $destination;
 	private $insurance = false;
 	private $passengers = array();
+	private $n_passengers = 1;
 	
 	
 	public function __construct(int $id = null, string $destination = null, bool $insurance = null)
@@ -37,7 +38,7 @@ class Reservation
         return $this->destination;
     }
 	
-	public function set_insurance(bool $insurance)
+	public function set_insurance($insurance)
 	{
 		$this->insurance = $insurance;
 	}
@@ -45,6 +46,16 @@ class Reservation
 	public function get_insurance()
 	{
 		return $this->insurance;
+	}
+	
+	public function set_n_passengers($n)
+	{
+		$this->n_passengers = $n;
+	}
+	
+	public function get_n_passengers()
+	{
+		return $this->n_passengers;
 	}
 	
 	public function add_passenger(Passenger $passenger)

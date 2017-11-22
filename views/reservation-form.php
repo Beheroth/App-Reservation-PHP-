@@ -8,7 +8,6 @@
 				<li>Moins de 12 ans = 10€</li>
 				<li>Plus de 12 ans = 15€</li>
 			</ul>
-			Assurance annullation = 20 € peu importe le nombre de voyageurs.
 		</div>
 	</div>
 
@@ -20,7 +19,7 @@
 		</div>
 		
 		<div class="form-check">
-			<label><input type="checkbox" id="insurance" name="insurance">Assurance</label>
+			<label>Assurance d'annulation -> 20€<input type="checkbox" id="insurance" name="insurance"></label>
 		</div>
 		
 		<div>

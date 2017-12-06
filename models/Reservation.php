@@ -7,6 +7,8 @@ class Reservation
 	private $passengers = array();
 	private $n_passengers = 1;
 	
+	private static $ADULT_PRICE = 15;
+	private static $CHILD_PRICE = 12;
 	
 	public function __construct(int $id = null, string $destination = null, bool $insurance = null)
 	{
@@ -60,7 +62,7 @@ class Reservation
 	
 	public function add_passenger(Passenger $passenger)
 	{
-		array_push($this->passengers[], $passenger);
+		$this->passengers[] = $passenger;
 	}
 	
 	public function get_passengers()
@@ -68,7 +70,22 @@ class Reservation
 		return $this->passengers;
 	}
 	
+	//MySQL 
 	
+	public function save()
+	{
+		$mysqli = new mysqli("localhost", "username", "password", "oui") or die("Could not select database");
+		if (mysqli->connect_errno){
+			echo "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno;
+		}
+		$sql = "INSERT INTO reservations($ID, $Destination, $Assurance, $Prix)
+		VALUES (".$this->get_ID().",".$this->get_destination().",".$this->get_assurance().",".$this->get_price()."); ";
+		if ($mysqli->query($sql) === TRUE){
+			echo "Record Updated successfully";
+			$id_insert = $mysqli->insert_id;
+		}else {
+			echo "Error inserting record: " . $mysqli->error;
+		}
 	//functions
 	
 	public function get_n()
@@ -80,6 +97,20 @@ class Reservation
     {
         return array();
     }	
+	
+	public function get_price()
+	{
+		$total = 0;
+		foreach($this->passengers as &$pas){
+			if($pas->get_age() <= 11)
+			{
+				$total += 15;
+			} else{
+				$total += 10;
+			}
+		}
+		return $total;
+	}		
 }
 
 	

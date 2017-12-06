@@ -2,11 +2,11 @@
 
 <form method="post" action="index.php">
 	Nom:<br>
-	<input type="text" name="lastname"><br>
+	<input type="text" name="lastname" value="John"><br>
 	Prénom:<br>
-	<input type="text" name="firstname"><br>
+	<input type="text" name="firstname" value="Doe" ><br>
 	Age:<br>
-	<input type="text" name="age">
+	<input type="number" name="age" value="2" >
 
 
 	<div>

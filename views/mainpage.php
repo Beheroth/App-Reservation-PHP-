@@ -10,7 +10,7 @@
             </form>
         </div>
 	</div>
-	<table class="table table-sm">
+	<table class="table table-sm" style="width 100%">
         <thead>
             <tr>
                 <th class="text-xs-center">ID</th>
@@ -20,6 +20,9 @@
                 <th class="text-xs-center">Suppression</th>
             </tr>
         </thead>
+		<tbody>
+		<?php
+        ?>
 		<tbody>
         </tbody>
     </table>

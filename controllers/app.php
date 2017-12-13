@@ -87,7 +87,8 @@ class App
 			$res->add_passenger($pas);
 			$_SESSION['res'] = serialize($res);
 			if(count($res->get_passengers()) == $res->get_n_passengers()){
-				include'views/payment-form.php';
+				$res->save();
+				include'views/mainpage.php';
 			} elseif(count($res->get_passengers()) <= $res->get_n_passengers()) {
 				include'views/registration-form.php';
 			}

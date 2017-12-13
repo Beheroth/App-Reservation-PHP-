@@ -22,6 +22,22 @@
         </thead>
 		<tbody>
 		<?php
+		$sql_reservations = Reservation::SQL_reservations();
+            foreach ($sql_reservations as $res) {
+                echo '<tr>';
+                echo '<td class="text-xs-center">'.$res['PKreservation'].'</td>';
+                echo '<td class="text-xs-center">'.$res['Destination'].'</td>';
+                if ($res['Assurance']) {
+                    echo '<td class="text-xs-center">
+                        <i class="fa fa-check"></i>
+                    </td>';
+                } else {
+                    echo '<td class="text-xs-center">
+                        <i class="fa fa-times"></i>
+                    </td>';
+                }
+                echo '</tr>';
+            }
         ?>
 		<tbody>
         </tbody>

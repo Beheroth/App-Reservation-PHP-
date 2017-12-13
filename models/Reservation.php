@@ -14,20 +14,20 @@ class Reservation
 	{
 		$this->id = $id;
 		$this->destination = $destination;
-		$this->insurance = $insurance; 
+		$this->insurance = $insurance;
 	}
 	
 	
 	//setter and getter
 	
-	public function set_id_travel(int $id)
-    {
-        $this->id = $id;
-    }
-	
 	public function get_id()
 	{
 		return $this->id;
+	}
+	
+	public function set_id($id)
+	{
+		$this->id = $id;
 	}
 	
 	public function set_destination(string $destination)
@@ -71,32 +71,62 @@ class Reservation
 	}
 	
 	//MySQL 
-	
+
 	public function save()
 	{
-		$mysqli = new mysqli("localhost", "username", "password", "oui") or die("Could not select database");
-		if (mysqli->connect_errno){
-			echo "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno;
+		$mysqli = new mysqli("localhost", "root", "", "dbreservation") or die("Could not select database");
+		if ($mysqli->connect_errno){
+			var_dump( "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno);
 		}
-		$sql = "INSERT INTO reservations($ID, $Destination, $Assurance, $Prix)
-		VALUES (".$this->get_ID().",".$this->get_destination().",".$this->get_assurance().",".$this->get_price()."); ";
+		$sql = "INSERT INTO reservations (Destination, Assurance, Prix) 
+		VALUES ('".$this->destination."','".$this->insurance."','".$this->get_price()."')";
 		if ($mysqli->query($sql) === TRUE){
-			echo "Record Updated successfully";
-			$id_insert = $mysqli->insert_id;
-		}else {
+			$id_res = $mysqli->insert_id;
+			echo "Record Updated successfully".$id_res;
+			$this->set_id($id_res);
+		} else {
 			echo "Error inserting record: " . $mysqli->error;
 		}
+		$mysqli->close();
+		
+		foreach($this->passengers as &$pas){
+			$pas->save($this->get_id());
+		}
+	}
+	
+	public static function SQL_reservations()
+	{
+		echo "FONCTION SQL_reservation appelée";
+		$sql_reservations = array();
+		$mysqli = new mysqli('localhost', "root", "", "dbreservation") or die('Could not select database');
+		if ($mysqli->connect_errno){
+			var_dump( "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno);
+		}
+		echo "AVANT LE IF STmT";
+		if($stmt = $mysqli->prepare("SELECT * FROM dbreservation")) //http://php.net/manual/en/mysqli.prepare.php
+		{
+			$stmt->execute();
+			$stmt->bind_result($PKreservation, $Destination, $Assurance, $Prix);
+			echo "AVANT le WHILE";
+			while ($stmt->fetch()){
+				echo "FETCHEE";
+				$sql_reservations[] = ["PKreservation" => $PKreservation,
+				"Destination" => $Destination, "Assurance" => $Assurance, "Prix" => $Prix];
+			}
+			$stmt->close();
+		} else{} #error couldn't prepare from dbreservation
+
+		$mysqli->close();
+		return $sql_reservations;
+	}
+	
 	//functions
 	
 	public function get_n()
 	{
 		return count($this->passengers);
 	}
-	
-	public static function list_reservations()
-    {
-        return array();
-    }	
+		
 	
 	public function get_price()
 	{

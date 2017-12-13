@@ -44,4 +44,21 @@ class Passenger
 	{
 		return $this->age;
 	}
+	
+	//MySQLi
+	
+	public function save($id_res)
+	{
+		$mysqli = new mysqli("localhost", "root", "", "dbreservation") or die("Could not select database");
+		if ($mysqli->connect_errno){
+			var_dump( "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno);
+		}
+		$sql = "INSERT INTO passenger (firstname, lastname, age, FK_reservation) VALUES ('".$this->firstname."','".$this->lastname."','".$this->get_age()."','".$id_res."')";
+		if ($mysqli->query($sql) === TRUE){
+			echo "Passenger successfully saved";
+		} else {
+			echo "Error creating passenger: " . $mysqli->error;
+		}
+		$mysqli->close();
+	}
 }

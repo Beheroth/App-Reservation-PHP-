@@ -14,12 +14,19 @@
 	<form method="post" action="index.php">
 	
 		<div class="form">
-			<label for="places">Nombre de places</label>
-			<input type="number" id="places" name="places">
+			<label for="destination">
+				Destination <input type="text" id= "destination" name="destination" value="Final"><br>
+			</label>
+			<label for="places">
+				Nombre de places <input type="number" id="places" name="places" value="1"><br>
+			</label>
 		</div>
 		
 		<div class="form-check">
-			<label>Assurance d'annulation -> 20€<input type="checkbox" id="insurance" name="insurance"></label>
+			<label>
+				Assurance d'annulation -> 20€<input type="checkbox" id="insurance" name="insurance" 
+				<?php if ($res != null && $res->get_insurance()) {echo 'checked';}?>>
+			</label>
 		</div>
 		
 		<div>

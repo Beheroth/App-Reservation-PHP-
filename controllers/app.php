@@ -24,13 +24,15 @@ class App
 	
 	private function newR()
 	{
+		$res = new Reservation();
+		$_SESSION['res'] = serialize($res);
 		include'views/reservation-form.php';
 	}
 	
 	private function stage1()
 	{
+		$res = unserialize($_SESSION['res']);
 		var_dump($_POST);
-		$res = new Reservation();
 		
 		if (empty($_POST['destination'])) {
 			//error
@@ -45,9 +47,11 @@ class App
 		} elseif (is_numeric($_POST['places'])){
 			$res->set_n_passengers((int)$_POST['places']);	
 		}
-
+		var_dump($res);
 		if (isset($_POST['insurance'])){
 			$res->set_insurance(true);
+		}if (!isset($_POST['insurance'])){
+			$res->set_insurance(false);
 		}
 		
 		$_SESSION['res'] = serialize($res);

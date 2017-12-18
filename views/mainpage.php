@@ -1,4 +1,9 @@
+<head>
+	<meta charset="utf-8">
+</head>
 <div id="index-page">
+	<center>
+	
     <h1 class="row">Bienvenue</h1>
 
     <div class="row">
@@ -15,8 +20,9 @@
             <tr>
                 <th class="text-xs-center">ID</th>
                 <th class="text-xs-center">Destination</th>
-                <th class="text-xs-center">Assurance</th>
-                <th class="text-xs-center">Modification</th>
+                <th class="text-xs-center">Prix</th>
+				<th class="text-xs-center">Assurance</th>
+			    <th class="text-xs-center">Modification</th>
                 <th class="text-xs-center">Suppression</th>
             </tr>
         </thead>
@@ -27,6 +33,7 @@
                 echo '<tr>';
                 echo '<td class="text-xs-center">'.$res['PKreservation'].'</td>';
                 echo '<td class="text-xs-center">'.$res['Destination'].'</td>';
+				echo '<td class="text-xs-center">'.$res['Prix'].'</td>';
                 if ($res['Assurance']) {
                     echo '<td class="text-xs-center">
                         <i class="fa fa-check"></i>
@@ -42,4 +49,5 @@
 		<tbody>
         </tbody>
     </table>
+	</center>
 </div>

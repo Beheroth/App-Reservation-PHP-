@@ -3,18 +3,17 @@ class Reservation
 {
 	private $id;
 	private $destination;
-	private $insurance = false;
+	private $insurance = true;
 	private $passengers = array();
 	private $n_passengers = 1;
 	
 	private static $ADULT_PRICE = 15;
 	private static $CHILD_PRICE = 12;
 	
-	public function __construct(int $id = null, string $destination = null, bool $insurance = null)
+	public function __construct(int $id = null, string $destination = null)
 	{
 		$this->id = $id;
 		$this->destination = $destination;
-		$this->insurance = $insurance;
 	}
 	
 	
@@ -30,7 +29,7 @@ class Reservation
 		$this->id = $id;
 	}
 	
-	public function set_destination(string $destination)
+	public function set_destination($destination)
     {
         $this->destination = $destination;
     }
@@ -96,26 +95,44 @@ class Reservation
 	
 	public static function SQL_reservations()
 	{
-		echo "FONCTION SQL_reservation appelée";
+		//Connection to db
 		$sql_reservations = array();
 		$mysqli = new mysqli('localhost', "root", "", "dbreservation") or die('Could not select database');
+		
+		//Connection Error
 		if ($mysqli->connect_errno){
 			var_dump( "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno);
 		}
-		echo "AVANT LE IF STmT";
-		if($stmt = $mysqli->prepare("SELECT * FROM dbreservation")) //http://php.net/manual/en/mysqli.prepare.php
-		{
-			$stmt->execute();
-			$stmt->bind_result($PKreservation, $Destination, $Assurance, $Prix);
-			echo "AVANT le WHILE";
-			while ($stmt->fetch()){
-				echo "FETCHEE";
+		
+			//Query
+		/*
+		$stmt = "SELECT PKreservation, Destination, Assurance, Prix FROM reservations";
+		$result = $mysqli->query($stmt);
+		
+			//Query error
+		if(!$result) {die(mysqli_error()."\n");}
+		var_dump($result);
+		$result->bind_result($PKreservation, $Destination, $Assurance, $Prix);
+		
+		while ($row = $result->fetch_assoc()){
 				$sql_reservations[] = ["PKreservation" => $PKreservation,
 				"Destination" => $Destination, "Assurance" => $Assurance, "Prix" => $Prix];
 			}
-			$stmt->close();
-		} else{} #error couldn't prepare from dbreservation
+		$result->close();		
+		*/
+		
 
+		if ($stmt = $mysqli->prepare("SELECT * FROM reservations")) //http://php.net/manual/en/mysqli.prepare.php
+		{
+			$stmt->execute();
+			$stmt->bind_result($PKreservation, $Destination, $Assurance, $Prix);
+			while ($stmt->fetch()){
+				$sql_reservations[] = ["PKreservation" => $PKreservation, "Prix" => $Prix,
+				"Destination" => $Destination, "Assurance" => $Assurance];
+			}
+			$stmt->close();
+		}if(!$stmt){ echo 'pas de if <br>'. $stmt;}
+		
 		$mysqli->close();
 		return $sql_reservations;
 	}

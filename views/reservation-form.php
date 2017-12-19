@@ -1,3 +1,10 @@
+<!DOCTYPE html> 
+<html lang="fr"> 
+<head> 
+	<meta charset="UTF-8">
+</head>
+
+<body>
 <h1 class="row">Réservation</h1>
 
 	<div class="row">
@@ -37,5 +44,5 @@
 		</div>
 	
 	</form>
-	
-
+</body>
+</html>

@@ -5,8 +5,9 @@ class Passenger
 	private $firstname;
 	private $lastname;
 	private $age;
+	private $reservation;
 	
-	public function __construct(string $firstname = null, string $lastname = null, int $age = null)
+	public function __construct($firstname = null, $lastname = null, $age = null)
 	{
 		$this->firstname = $firstname;
 		$this->lastname = $lastname;
@@ -44,6 +45,18 @@ class Passenger
 	{
 		return $this->age;
 	}
+
+	/*
+	public function get_reservation()
+	{
+		return $this->reservation;
+	}
+	
+	public function set_reservation($reservation)
+	{
+		$this->reservation = reservation;
+	}	
+	*/
 	
 	//MySQLi
 	

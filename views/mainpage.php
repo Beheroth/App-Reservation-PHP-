@@ -1,6 +1,9 @@
+<!DOCTYPE html> 
+<html lang="fr"> 
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 </head>
+<body>
 <div id="index-page">
 	<center>
 	
@@ -28,26 +31,26 @@
         </thead>
 		<tbody>
 		<?php
-		$sql_reservations = Reservation::SQL_reservations();
-            foreach ($sql_reservations as $res) {
-                echo '<tr>';
-                echo '<td class="text-xs-center">'.$res['PKreservation'].'</td>';
-                echo '<td class="text-xs-center">'.$res['Destination'].'</td>';
-				echo '<td class="text-xs-center">'.$res['Prix'].'</td>';
-                if ($res['Assurance']) {
-                    echo '<td class="text-xs-center">
-                        <i class="fa fa-check"></i>
-                    </td>';
-                } else {
-                    echo '<td class="text-xs-center">
-                        <i class="fa fa-times"></i>
-                    </td>';
-                }
-                echo '</tr>';
-            }
+			$sql_reservations = Reservation::SQL_reservations();
+				foreach ($sql_reservations as $res) {
+					echo '<tr>';
+					echo '<td class="text-xs-center">'.$res['PKreservation'].'</td>';
+					echo '<td class="text-xs-center">'.$res['Destination'].'</td>';
+					echo '<td class="text-xs-center">'.$res['Prix'].'</td>';
+					echo '<td class="text-xs-center">'.$res['Assurance'].'</td>';
+					/*
+					if($res['Assurance'] == 0)
+						{
+							echo "" //ce qu'il se passerait si Assurance == 1;
+						}
+					*/
+					echo '</tr>';
+				}
         ?>
-		<tbody>
+		
         </tbody>
     </table>
 	</center>
 </div>
+</body>
+</html>

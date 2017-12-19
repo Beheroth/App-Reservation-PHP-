@@ -99,7 +99,6 @@ class Reservation
 		$sql_reservations = array();
 		$mysqli = new mysqli('localhost', "root", "", "dbreservation") or die('Could not select database');
 		
-		//Connection Error
 		if ($mysqli->connect_errno){
 			var_dump( "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno);
 		}
@@ -131,8 +130,7 @@ class Reservation
 				"Destination" => $Destination, "Assurance" => $Assurance];
 			}
 			$stmt->close();
-		}if(!$stmt){ echo 'pas de if <br>'. $stmt;}
-		
+		}		
 		$mysqli->close();
 		return $sql_reservations;
 	}

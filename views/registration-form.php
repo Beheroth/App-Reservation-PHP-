@@ -1,3 +1,9 @@
+<!doctype html> 
+<html lang="fr"> 
+<head> 
+	<meta charset="UTF-8">
+</head>
+
 <h1>Enregistrement de passager</h1>
 
 <form method="post" action="index.php">

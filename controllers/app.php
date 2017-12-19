@@ -47,13 +47,11 @@ class App
 		} elseif (is_numeric($_POST['places'])){
 			$res->set_n_passengers((int)$_POST['places']);	
 		}
-		var_dump($res);
-		if (isset($_POST['insurance'])){
-			$res->set_insurance(true);
-		}if (!isset($_POST['insurance'])){
-			$res->set_insurance(false);
+		$insurance = "0";
+		if(isset($_POST['insurance'])){
+			$insurance = "1";
 		}
-		
+		$res->set_insurance($insurance);
 		$_SESSION['res'] = serialize($res);
 		include'views/registration-form.php';
 	}

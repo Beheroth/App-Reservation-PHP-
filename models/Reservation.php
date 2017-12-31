@@ -3,17 +3,18 @@ class Reservation
 {
 	private $id;
 	private $destination;
-	private $insurance = true;
+	private $insurance;
 	private $passengers = array();
 	private $n_passengers = 1;
 	
 	private static $ADULT_PRICE = 15;
 	private static $CHILD_PRICE = 12;
 	
-	public function __construct(int $id = null, string $destination = null)
+	public function __construct($id = null, $destination = null, $insurance = null)
 	{
 		$this->id = $id;
 		$this->destination = $destination;
+		$this->insurance = $insurance;
 	}
 	
 	
@@ -81,7 +82,6 @@ class Reservation
 		VALUES ('".$this->destination."','".$this->insurance."','".$this->get_price()."')";
 		if ($mysqli->query($sql) === TRUE){
 			$id_res = $mysqli->insert_id;
-			echo "Record Updated successfully".$id_res;
 			$this->set_id($id_res);
 		} else {
 			echo "Error inserting record: " . $mysqli->error;
@@ -135,6 +135,65 @@ class Reservation
 		return $sql_reservations;
 	}
 	
+	public static function get_from_PK($PK)
+	{
+		$sql_reservations = array();
+		$mysqli = new mysqli('localhost', "root", "", "dbreservation") or die('Could not select database');
+		
+		if ($mysqli->connect_errno){
+			var_dump( "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno);
+		}
+		
+		if ($stmt = $mysqli->prepare("SELECT * FROM reservations WHERE PKreservation = ?"))
+		{
+			$stmt->bind_param('i', $PK);
+			$stmt->execute();
+			$stmt->bind_result($PKreservation, $Destination, $Assurance, $Prix);
+			$stmt->fetch();
+			$stmt->close();
+			$res = new self($PKreservation, $Destination, $Assurance);
+		}
+		if ($stmt = $mysqli->prepare("SELECT * FROM passengers WHERE FK_reservation = ?")) 
+		{
+			$stmt->bind_param('i', $PK);
+			$stmt->execute();
+			$stmt->bind_result($ID, $Firstname, $Lastname, $Age, $FKres);
+			while($stmt->fetch())
+				{
+					$pas = new Passenger($ID, $Firstname, $Lastname, $Age);
+					$res->add_passenger($pas);
+				}
+			$stmt->close();		
+		}		
+		$mysqli->close();
+		return $res;
+	}
+	
+	public static function remove($PK)
+	{
+		$sql_reservations = array();
+		$mysqli = new mysqli('localhost', "root", "", "dbreservation") or die('Could not select database');
+		
+		if ($mysqli->connect_errno){
+			var_dump( "FAILED to connect to MySQLi : (".$mysqli->connect_errno.")".$mysqli->connect_errno);
+		}
+		
+		if ($stmt = $mysqli->prepare("DELETE FROM passenger WHERE FK_reservation = ?")) 
+		{
+			$stmt->bind_param('i', $PK);
+			$stmt->execute();
+			$stmt->close();		
+		}
+		
+		if ($stmt = $mysqli->prepare("DELETE FROM reservations WHERE PKreservation = ?"))
+		{
+			$stmt->bind_param('i', $PK);
+			$stmt->execute();
+			$stmt->close();
+		}
+		
+		$mysqli->close();
+	}
 	//functions
 	
 	public function get_n()
@@ -149,10 +208,13 @@ class Reservation
 		foreach($this->passengers as &$pas){
 			if($pas->get_age() <= 11)
 			{
-				$total += 15;
+				$total += 12;
 			} else{
-				$total += 10;
+				$total += 15;
 			}
+		}
+		if($this->get_insurance() != 0){
+			$total += 20;
 		}
 		return $total;
 	}		

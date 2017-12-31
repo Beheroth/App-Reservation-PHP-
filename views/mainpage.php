@@ -13,26 +13,26 @@
 <div id="index-page">
 	
     <h1>Bienvenue</h1>
-
+	<form method="post" action="index.php">
     <div>
-		<form method="post" action="index.php">
-			<button id="new-reservation" type="submit" class="btn btn-primary big" name="new">
-				Nouvelle réservation
-			</button>
-		</form>
+
+		<button id="new-reservation" type="submit" name="new">
+			Nouvelle réservation
+		</button>
+
 	</div>
 	
 	<div>
 	
-		<table class="table table-sm" style="width 100%">
+		<table style="width 100%">
 			<thead>
 				<tr>
-					<th class="text-xs-center">ID</th>
-					<th class="text-xs-center">Destination</th>
-					<th class="text-xs-center">Prix</th>
-					<th class="text-xs-center">Assurance</th>
-					<th class="text-xs-center">Modification</th>
-					<th class="text-xs-center">Suppression</th>
+					<th>ID</th>
+					<th>Destination</th>
+					<th>Prix</th>
+					<th>Assurance</th>
+					<th>Modification</th>
+					<th>Suppression</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,15 +40,15 @@
 				$sql_reservations = Reservation::SQL_reservations();
 					foreach ($sql_reservations as $res) {
 						echo '<tr>';
-						echo '<td class="text-xs-center">'.$res['PKreservation'].'</td>';
-						echo '<td class="text-xs-center">'.$res['Destination'].'</td>';
-						echo '<td class="text-xs-center">'.$res['Prix'].'</td>';
-						echo '<td class="text-xs-center">'.$res['Assurance'].'</td>';
-						echo '<td class="text-xs-center">
-						<button id="modify" type="submit" class="btn btn-primary big" name="modify">Modifier
+						echo '<td>'.$res['PKreservation'].'</td>';
+						echo '<td>'.$res['Destination'].'</td>';
+						echo '<td>'.$res['Prix'].'</td>';
+						echo '<td>'.$res['Assurance'].'</td>';
+						echo '<td>
+						<button id="modify" type="submit" name="modify" value="'.$res['PKreservation'].'">Modifier
 						</button>';
-						echo '<td class="text-xs-center">
-						<button id="delete" type="submit" class="btn btn-primary big" name="delete">Supprimer
+						echo '<td>
+						<button id="remove" type="submit" name="remove" value="'.$res['PKreservation'].'">Supprimer
 						</button>';
 						echo '</tr>';
 					}
@@ -58,6 +58,7 @@
 		</table>
 		
 	</div>
+	</form>
 </div>
 </body>
 </html>

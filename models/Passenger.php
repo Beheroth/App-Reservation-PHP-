@@ -2,13 +2,19 @@
 
 class Passenger
 {
+	private $id;
 	private $firstname;
 	private $lastname;
 	private $age;
 	private $reservation;
 	
-	public function __construct($firstname = null, $lastname = null, $age = null)
+	public function __construct(
+		$id = null, 
+		$firstname = null,
+		$lastname = null, 
+		$age = null)
 	{
+		$this->id = $id;
 		$this->firstname = $firstname;
 		$this->lastname = $lastname;
 		$this->age = $age;
@@ -29,6 +35,11 @@ class Passenger
 	public function set_age($age)
 	{
 		$this->age = $age;
+	}
+	
+	public function get_id()
+	{
+		return $this->id;
 	}
 	
 	public function get_firstname()
@@ -68,9 +79,9 @@ class Passenger
 		}
 		$sql = "INSERT INTO passenger (firstname, lastname, age, FK_reservation) VALUES ('".$this->firstname."','".$this->lastname."','".$this->get_age()."','".$id_res."')";
 		if ($mysqli->query($sql) === TRUE){
-			echo "Passenger successfully saved";
+			//echo "Passenger successfully saved";
 		} else {
-			echo "Error creating passenger: " . $mysqli->error;
+			//echo "Error creating passenger: " . $mysqli->error;
 		}
 		$mysqli->close();
 	}

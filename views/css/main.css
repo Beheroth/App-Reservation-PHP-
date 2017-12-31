@@ -28,6 +28,11 @@ body {
   text-align: center;
 }
 
+#error {
+	color: red;
+}
+
+
 h1 {
   border-radius: 4px;
   color: #FFFFFF;
@@ -59,6 +64,7 @@ button {
   outline: 0;
   background: #9E9E9E;
   box-shadow: 0 2px 5px rgba(0, 0, 0, .26);
+  margin-top: 4px;
 }
 
 button:hover {
@@ -100,4 +106,8 @@ th {
 
 tr:nth-child(2n+1) {
   background-color: #E0E0E0;
+}
+
+td {
+	text-align: center;
 }
